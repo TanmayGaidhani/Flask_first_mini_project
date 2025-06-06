@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block body %}
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('{{ url_for('static', filename='assets/img/post-bg.jpg') }}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <!-- Single Post Title -->
+                    <a href="{{ url_for('post_route', slug=post.slug) }}">
+                     {{ post.title }}
+                    </a>
+                    
+                    <!-- Post Subheading (first 150 chars of content) -->
+                    <h2 class="subheading">{{ post.content[:150] }}...</h2>
+                    
+                    <!-- Post Meta Data -->
+                    <span class="meta">
+                        Posted on {{ post.date.strftime('%B %d, %Y') }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <!-- Main Post Content -->
+                {{ post.content|safe }}
+                
+                <!-- Related Posts Section -->
+                <div class="related-posts mt-5">
+                    <h4>You Might Also Like</h4>
+                    <div class="list-group">
+                        {% for related_post in related_posts %}
+                        <a href="{{ url_for('post_route', slug=related_post.slug) }}" 
+                           class="list-group-item list-group-item-action">
+                            <h5 class="mb-1">{{ related_post.title }}</h5>
+                            <small>{{ related_post.date.strftime('%b %d, %Y') }}</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock %}
